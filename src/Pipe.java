@@ -1,4 +1,4 @@
 
-public class Pipe {
+public class Pipe extends GameObject{
 
 }

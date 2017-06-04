@@ -12,7 +12,7 @@ public class ObjectManager {
 		objects.add(o);
 	}
 	
-	public void update(Graphics g){
+	public void update(){
 		for(int i = 0; i < objects.size(); i++){
 		GameObject o = objects.get(i);	
 			o.update();
