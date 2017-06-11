@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,7 +24,7 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 	ObjectManager manager = new ObjectManager();
 	Bird bird = new Bird(0,0,70,70,5);
 	public GamePanel(){
-		timer = new Timer(1,this);
+		timer = new Timer(1000/55,this);
 		manager.addObject(bird);
 		try {
 			birdImg = ImageIO.read(this.getClass().getResourceAsStream("bird.png"));
@@ -37,7 +38,8 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 	
 	}
 	public void paintComponent(Graphics g){
-		drawGameState(g);
+		Graphics2D g2 = (Graphics2D) g;	
+				drawGameState(g2);
 		
 	}
 	@Override
@@ -49,7 +51,7 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 	void updateMenuState(){
 		
 	}
-	void drawMenuState(Graphics g){
+	void drawMenuState(Graphics2D g){
 		
 	}
 	
@@ -58,7 +60,7 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 		
 		manager.update();
 	}
-	void drawGameState(Graphics g){
+	void drawGameState(Graphics2D g){
 		manager.draw(g);
 		
 		
@@ -68,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 	void updateSceneState(){
 		
 	}
-	void drawSceneState(Graphics g){
+	void drawSceneState(Graphics2D g){
 		
 	}
 	
@@ -76,7 +78,7 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 	void updateEndState(){
 		
 	}
-	void drawEndState(Graphics g){
+	void drawEndState(Graphics2D g){
 		
 	}
 	
@@ -97,14 +99,12 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_SPACE){
-			bird.jump = true;
+			bird.jump();
 		}
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_SPACE)
-			bird.jump = false;
+		// TODO Auto-generated method stub
+		
 	}
-	
-	
 }
