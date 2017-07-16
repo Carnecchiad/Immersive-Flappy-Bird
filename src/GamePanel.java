@@ -8,11 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
-
-public class GamePanel extends JPanel implements ActionListener , KeyListener{
-	public static BufferedImage birdImg;
+public class GamePanel extends JPanel implements ActionListener, KeyListener {
+	public static BufferedImage birdImg1;
+	public static BufferedImage birdImg2;
+	public static BufferedImage birdImg3;
+	public static String frame;
 	public static BufferedImage pipeImg;
 	public static BufferedImage phoneImg;
 	Timer timer;
@@ -22,89 +25,98 @@ public class GamePanel extends JPanel implements ActionListener , KeyListener{
 	final int END_STATE = 3;
 	int CURRENT_STATE = GAME_STATE;
 	ObjectManager manager = new ObjectManager();
-	Bird bird = new Bird(0,0,70,70,5);
-	public GamePanel(){
-		timer = new Timer(1000/55,this);
+	Bird bird = new Bird(170, 0, 130, 100, 5);
+
+	public GamePanel() {
+		timer = new Timer(1000 / 55, this);
 		manager.addObject(bird);
 		try {
-			birdImg = ImageIO.read(this.getClass().getResourceAsStream("bird.png"));
+			birdImg1 = ImageIO.read(this.getClass().getResourceAsStream("1.png"));
+			birdImg2 = ImageIO.read(this.getClass().getResourceAsStream("2.png"));
+			birdImg3 = ImageIO.read(this.getClass().getResourceAsStream("3.png"));
 			pipeImg = ImageIO.read(this.getClass().getResourceAsStream("pipe.png"));
-			//phoneImg = ImageIO.read(this.getClass().getResourceAsStream("phone.png"));
-			
+			// phoneImg =
+			// ImageIO.read(this.getClass().getResourceAsStream("phone.png"));
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 	}
-	public void paintComponent(Graphics g){
-		Graphics2D g2 = (Graphics2D) g;	
-				drawGameState(g2);
-		
+
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		drawGameState(g2);
+
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		updateGameState();
 		repaint();
 	}
-	//Menu State	
-	void updateMenuState(){
-		
+
+	// Menu State
+	void updateMenuState() {
+
 	}
-	void drawMenuState(Graphics2D g){
-		
+
+	void drawMenuState(Graphics2D g) {
+
 	}
-	
-	//Game State
-	void updateGameState(){
-		
+
+	// Game State
+	void updateGameState() {
 		manager.update();
 	}
-	void drawGameState(Graphics2D g){
+
+	void drawGameState(Graphics2D g) {
 		manager.draw(g);
-		
-		
-	}		
-			
-	//Scene State
-	void updateSceneState(){
-		
+
 	}
-	void drawSceneState(Graphics2D g){
-		
+
+	// Scene State
+	void updateSceneState() {
+
 	}
-	
-	//End State
-	void updateEndState(){
-		
+
+	void drawSceneState(Graphics2D g) {
+
 	}
-	void drawEndState(Graphics2D g){
-		
+
+	// End State
+	void updateEndState() {
+
 	}
-	
-	void startGame(){
-		 timer.start();
-		}
-	
+
+	void drawEndState(Graphics2D g) {
+
+	}
+
+	void startGame() {
+		timer.start();
+	}
+
 	public static void main(String[] args) {
-		
+
 	}
-		
-	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_SPACE){
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			bird.jump();
 		}
 	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
