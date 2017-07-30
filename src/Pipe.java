@@ -9,6 +9,6 @@ public class Pipe extends GameObject{
 			
 		}
 		void draw(Graphics g){
-			
+			 
 		}
 }
