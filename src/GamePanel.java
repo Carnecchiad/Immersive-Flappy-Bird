@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+	public static BufferedImage backgroundImg;
 	public static BufferedImage birdImg1;
+	public static BufferedImage bottomImg;
 	public static BufferedImage birdImg2;
 	public static BufferedImage birdImg3;
 	public static String frame;
@@ -25,16 +27,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int END_STATE = 3;
 	int CURRENT_STATE = GAME_STATE;
 	ObjectManager manager = new ObjectManager();
-	Bird bird = new Bird(170, 0, 130, 100, 5);
+	Bird bird = new Bird(170, 0, 80, 80, 5);
+	Background b = new Background();
+	Bottom bottom  = new Bottom();
 
 	public GamePanel() {
 		timer = new Timer(1000 / 55, this);
 		manager.addObject(bird);
 		try {
-			birdImg1 = ImageIO.read(this.getClass().getResourceAsStream("1.png"));
-			birdImg2 = ImageIO.read(this.getClass().getResourceAsStream("2.png"));
-			birdImg3 = ImageIO.read(this.getClass().getResourceAsStream("3.png"));
+			birdImg1 = ImageIO.read(this.getClass().getResourceAsStream("Bird.png"));
+			bottomImg = ImageIO.read(this.getClass().getResourceAsStream("bottom.png"));
+			backgroundImg = ImageIO.read(this.getClass().getResourceAsStream("Background.jpg"));
 			pipeImg = ImageIO.read(this.getClass().getResourceAsStream("pipe.png"));
+			
 			// phoneImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("phone.png"));
 
@@ -68,10 +73,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	// Game State
 	void updateGameState() {
+		bottom.update();
 		manager.update();
 	}
 
 	void drawGameState(Graphics2D g) {
+		
+		b.draw(g);
+		bottom.draw(g);
 		manager.draw(g);
 
 	}

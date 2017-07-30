@@ -43,10 +43,18 @@ public class Bird extends GameObject implements ActionListener {
 	}
 
 	void update() {
-		switchImage();
+	
 		yVelocity += gravity;
 		y += yVelocity;
-
+		
+		if(y>467){
+			yVelocity = 0;
+			
+			gravity = 0;
+			jumpPower = 0;
+			currentRotation = 0;
+		}
+		
 		if (canJump = true) {
 
 			t++;
@@ -78,14 +86,14 @@ public class Bird extends GameObject implements ActionListener {
 	}
 
 	void draw(Graphics g) {
-		System.out.println(imageCount);
+		
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform old = g2.getTransform();
 		AffineTransform current = new AffineTransform();
 		current.rotate(Math.toRadians(currentRotation), x + (width / 2), y + (height / 2));
 		g2.setTransform(current);
 
-		g2.drawImage(currentImg, x, y, width, height, null);
+		g2.drawImage(GamePanel.birdImg1, x, y, width, height, null);
 
 		g2.transform(old);
 
@@ -97,20 +105,4 @@ public class Bird extends GameObject implements ActionListener {
 
 	}
 
-	private void switchImage() {
-		if (System.currentTimeMillis() - start >= (1000 / 6)) {
-			imageCount++;
-			if (imageCount == 0) {
-				currentImg = GamePanel.birdImg1;
-			}
-			if (imageCount == 1) {
-				currentImg = GamePanel.birdImg2;
-			}
-			if (imageCount == 2) {
-				currentImg = GamePanel.birdImg3;
-			}
-			start = System.currentTimeMillis();
-		}
-
-	}
 }
