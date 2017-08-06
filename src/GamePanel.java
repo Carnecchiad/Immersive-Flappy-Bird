@@ -18,9 +18,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static BufferedImage birdImg2;
 	public static BufferedImage birdImg3;
 	public static String frame;
+	public static BufferedImage pipeImg2;
 	public static BufferedImage pipeImg;
 	public static BufferedImage phoneImg;
 	Timer timer;
+	int speed = 2;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int SCENE_STATE = 2;
@@ -29,8 +31,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	ObjectManager manager = new ObjectManager();
 	Bird bird = new Bird(170, 0, 80, 80, 5);
 	Background b = new Background();
-	Bottom bottom  = new Bottom();
-
+	Bottom bottom  = new Bottom(speed);
+	Pipe pipe = new Pipe(400);
 	public GamePanel() {
 		timer = new Timer(1000 / 55, this);
 		manager.addObject(bird);
@@ -39,6 +41,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			bottomImg = ImageIO.read(this.getClass().getResourceAsStream("bottom.png"));
 			backgroundImg = ImageIO.read(this.getClass().getResourceAsStream("Background.jpg"));
 			pipeImg = ImageIO.read(this.getClass().getResourceAsStream("pipe.png"));
+			pipeImg2 = ImageIO.read(this.getClass().getResourceAsStream("pipe2.png"));
 			
 			// phoneImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("phone.png"));
@@ -73,6 +76,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	// Game State
 	void updateGameState() {
+	
+		if(bird.y > 669){
+			bottom.speed = 0;
+		}
+		pipe.update();
 		bottom.update();
 		manager.update();
 	}
@@ -80,6 +88,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics2D g) {
 		
 		b.draw(g);
+		pipe.draw(g);
 		bottom.draw(g);
 		manager.draw(g);
 

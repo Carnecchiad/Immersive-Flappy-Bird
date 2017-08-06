@@ -46,10 +46,10 @@ public class Bird extends GameObject implements ActionListener {
 	
 		yVelocity += gravity;
 		y += yVelocity;
-		
-		if(y>467){
+
+		if(y>670){
 			yVelocity = 0;
-			
+			y=670;
 			gravity = 0;
 			jumpPower = 0;
 			currentRotation = 0;

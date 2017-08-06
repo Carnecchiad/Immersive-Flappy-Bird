@@ -9,6 +9,6 @@ public class Background extends GameObject{
 		
 	}
 	void draw(Graphics g){
-		g.drawImage(GamePanel.backgroundImg, 0,0,500,670,null);
+		g.drawImage(GamePanel.backgroundImg, 0,0,600,900,null);
 	}
 }

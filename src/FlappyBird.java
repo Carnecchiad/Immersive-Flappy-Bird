@@ -3,8 +3,8 @@ import javax.swing.JFrame;
 public class FlappyBird {
 	JFrame frame;
 	GamePanel panel;
-	public static final int width = 500;
-	public static final int height = 670;
+	public static final int width = 600;
+	public static final int height = 900;
 
 	FlappyBird() {
 		frame = new JFrame();
