@@ -32,7 +32,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Bird bird = new Bird(170, 0, 80, 80, 5);
 	Background b = new Background();
 	Bottom bottom  = new Bottom(speed);
-	Pipe pipe = new Pipe(400);
+	Pipe pipe = new Pipe(380);
+	
 	public GamePanel() {
 		timer = new Timer(1000 / 55, this);
 		manager.addObject(bird);
@@ -81,6 +82,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			bottom.speed = 0;
 		}
 		pipe.update();
+		pipe2.update();
 		bottom.update();
 		manager.update();
 	}
@@ -89,6 +91,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		b.draw(g);
 		pipe.draw(g);
+		pipe2.draw(g);
 		bottom.draw(g);
 		manager.draw(g);
 
