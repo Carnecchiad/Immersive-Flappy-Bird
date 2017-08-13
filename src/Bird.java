@@ -4,14 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class Bird extends GameObject implements ActionListener {
+	Random random = new Random();
 	boolean shoot;
 	public float stamina;
 	public float stress;
 	public float sanitation;
 	public float fame;
 	public float oxygen;
+	public float robbie = 25;
+	int hardWork = 1;
 	int yVelocity = 0;
 	int currentRotation = 0;
 	int gravity = 1;
@@ -43,18 +47,36 @@ public class Bird extends GameObject implements ActionListener {
 	}
 
 	void update() {
-	
+		robbie -= 0.98;
+		robbie += random.nextInt(3);
+		if (robbie > 99) {
+			gravity = 100;
+		}
+		if (hardWork > 1) {
+			if (stress < 101) {
+				stress += 1.2;
+			}
+		}
+		if (y < 50) {
+			oxygen+=8;
+		}
+		oxygen -= 0.4;
+
+		if (stamina < 101) {
+			stamina += 0.2 * hardWork;
+		}
 		yVelocity += gravity;
 		y += yVelocity;
 
-		if(y>670){
+		if (y > 670) {
 			yVelocity = 0;
-			y=670;
+
+			y = 670;
 			gravity = 0;
 			jumpPower = 0;
 			currentRotation = 0;
 		}
-		
+
 		if (canJump = true) {
 
 			t++;
@@ -75,18 +97,25 @@ public class Bird extends GameObject implements ActionListener {
 	}
 
 	void jump() {
-		if (canJump) {
-			yVelocity = jumpPower;
-			canJump = false;
-			startTime = -1;
-			t = 0;
+		if (oxygen < 100) {
+			if (stress < 100) {
+				if (stamina >= 10) {
+					if (canJump) {
+						yVelocity = jumpPower;
+						stamina -= 10;
+						canJump = false;
+						startTime = -1;
+						t = 0;
+					}
+				}
+			}
 		}
 		currentRotation = -33;
 
 	}
 
 	void draw(Graphics g) {
-		
+
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform old = g2.getTransform();
 		AffineTransform current = new AffineTransform();

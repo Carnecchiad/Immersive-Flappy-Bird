@@ -27,13 +27,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 	final int SCENE_STATE = 2;
 	final int END_STATE = 3;
-	int CURRENT_STATE = GAME_STATE;
+	int CURRENT_STATE = 1;
 	ObjectManager manager = new ObjectManager();
-	Bird bird = new Bird(170, 0, 80, 80, 5);
+	Bird bird = new Bird(170, 100, 80, 80, 5);
 	Background b = new Background();
-	Bottom bottom  = new Bottom(speed);
+	Bottom bottom = new Bottom(speed);
 	Pipe pipe = new Pipe(380);
-	
+	Pipe pipe2 = new Pipe(0);
+
 	public GamePanel() {
 		timer = new Timer(1000 / 55, this);
 		manager.addObject(bird);
@@ -43,7 +44,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			backgroundImg = ImageIO.read(this.getClass().getResourceAsStream("Background.jpg"));
 			pipeImg = ImageIO.read(this.getClass().getResourceAsStream("pipe.png"));
 			pipeImg2 = ImageIO.read(this.getClass().getResourceAsStream("pipe2.png"));
-			
+
 			// phoneImg =
 			// ImageIO.read(this.getClass().getResourceAsStream("phone.png"));
 
@@ -77,10 +78,35 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	// Game State
 	void updateGameState() {
-	
-		if(bird.y > 669){
+		System.out.println(bird.hardWork);
+		if (bird.y > 669) {
 			bottom.speed = 0;
 		}
+		if (bird.y > pipe.y - 50 && bird.x > pipe.x - 65 && bird.x < pipe.x + 65) {
+			pipe.speed = 0;
+			pipe2.speed = 0;
+			bottom.speed = 0;
+			CURRENT_STATE = 3;
+		}
+		if (bird.y < pipe.y - 340 && bird.x > pipe.x - 65 && bird.x < pipe.x + 65) {
+			pipe.speed = 0;
+			pipe2.speed = 0;
+			bottom.speed = 0;
+			CURRENT_STATE = 3;
+		}
+		if (bird.y > pipe2.y - 50 && bird.x > pipe2.x - 65 && bird.x < pipe2.x + 65) {
+			pipe.speed = 0;
+			pipe2.speed = 0;
+			bottom.speed = 0;
+			CURRENT_STATE = 3;
+		}
+		if (bird.y < pipe2.y - 340 && bird.x > pipe2.x - 65 && bird.x < pipe2.x + 65) {
+			pipe.speed = 0;
+			pipe2.speed = 0;
+			bottom.speed = 0;
+			CURRENT_STATE = 3;
+		}
+
 		pipe.update();
 		pipe2.update();
 		bottom.update();
@@ -93,8 +119,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		pipe.draw(g);
 		pipe2.draw(g);
 		bottom.draw(g);
+		g.fillRect(40, 700, (int) bird.stamina, 30);
+		g.fillRect(40, 735, (int)bird.robbie, 30);
+		g.fillRect(40, 770, (int)bird.stress, 30);
+		g.fillRect(40, 805, (int)bird.oxygen, 30);
 		manager.draw(g);
-
+		
 	}
 
 	// Scene State
@@ -112,7 +142,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawEndState(Graphics2D g) {
-
+		b.draw(g);
 	}
 
 	void startGame() {
@@ -133,11 +163,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			bird.jump();
 		}
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			bird.hardWork = 4;
+			
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			bird.hardWork = 1;
+		}
 	}
 }

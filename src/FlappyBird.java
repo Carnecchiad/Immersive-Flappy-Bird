@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+import javax.swing.JFrame; 
 
 public class FlappyBird {
 	JFrame frame;
@@ -12,7 +12,6 @@ public class FlappyBird {
 
 		frame.addKeyListener(panel);
 		setup();
-
 	}
 
 	void setup() {
