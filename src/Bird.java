@@ -2,19 +2,24 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Bird extends GameObject implements ActionListener {
+import javax.imageio.ImageIO;
+
+public class Bird extends GameObject implements ActionListener,KeyListener {
 	Random random = new Random();
 	boolean shoot;
+	boolean collide;
 	public float stamina;
 	public float stress;
 	public float sanitation;
 	public float fame;
 	public float oxygen;
-	public float robbie = 25;
+	public float robbie = 100;
 	int hardWork = 1;
 	int yVelocity = 0;
 	int currentRotation = 0;
@@ -32,6 +37,7 @@ public class Bird extends GameObject implements ActionListener {
 
 	Bird(int x, int y, int width, int height, int speed) {
 		super();
+		
 		stamina = 100;
 		stress = 0;
 		sanitation = 100;
@@ -47,9 +53,12 @@ public class Bird extends GameObject implements ActionListener {
 	}
 
 	void update() {
-		robbie -= 0.98;
-		robbie += random.nextInt(3);
-		if (robbie > 99) {
+		if(robbie > 100) {
+			robbie = 100;
+		}
+		robbie += 0.983;
+		robbie -= random.nextInt(3);
+		if (robbie < 1) {
 			gravity = 100;
 		}
 		if (hardWork > 1) {
@@ -58,10 +67,11 @@ public class Bird extends GameObject implements ActionListener {
 			}
 		}
 		if (y < 50) {
-			oxygen+=8;
+			oxygen-=8;
 		}
-		oxygen -= 0.4;
-
+		if(oxygen < 100) {
+		oxygen += 0.4;
+		}
 		if (stamina < 101) {
 			stamina += 0.2 * hardWork;
 		}
@@ -97,7 +107,8 @@ public class Bird extends GameObject implements ActionListener {
 	}
 
 	void jump() {
-		if (oxygen < 100) {
+	if(collide == false) {
+		if (oxygen > 0) {
 			if (stress < 100) {
 				if (stamina >= 10) {
 					if (canJump) {
@@ -108,22 +119,23 @@ public class Bird extends GameObject implements ActionListener {
 						t = 0;
 					}
 				}
+				}
 			}
-		}
+	}
 		currentRotation = -33;
 
 	}
 
 	void draw(Graphics g) {
-
+		currentImg = GamePanel.ded;
 		Graphics2D g2 = (Graphics2D) g;
 		AffineTransform old = g2.getTransform();
 		AffineTransform current = new AffineTransform();
 		current.rotate(Math.toRadians(currentRotation), x + (width / 2), y + (height / 2));
 		g2.setTransform(current);
 
-		g2.drawImage(GamePanel.birdImg1, x, y, width, height, null);
-
+		g2.drawImage(currentImg, x, y, width, height, null);
+		
 		g2.transform(old);
 
 	}
@@ -131,7 +143,27 @@ public class Bird extends GameObject implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			currentImg = GamePanel.pipeImg;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

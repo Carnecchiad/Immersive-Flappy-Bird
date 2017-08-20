@@ -26,3 +26,4 @@ public class FlappyBird {
 		FlappyBird game = new FlappyBird();
 	}
 }
+ 
